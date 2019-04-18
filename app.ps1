@@ -1,6 +1,5 @@
 param(
-    [string]$command = "",
-    [string]$dir = ""
+    [string]$command = ""
 )
 
 $tag = "docker-sonarqube-scanner-dev"

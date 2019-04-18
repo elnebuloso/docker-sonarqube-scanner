@@ -8,4 +8,4 @@ RUN apk add --no-cache wget \
     && cd /usr/bin && ln -s /sonar-scanner-${SONAR_SCANNER_VERSION}/bin/sonar-scanner sonar-scanner \
     && apk del wget
 
-CMD sonar-scanner
+CMD sh

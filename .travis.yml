@@ -7,3 +7,7 @@ script:
   - export SONAR_SCANNER_VERSION=$(cat ./VERSION)
   - echo ${SONAR_SCANNER_VERSION}
   - docker build --tag elnebuloso/sonarqube-scanner --pull --rm --no-cache --build-arg SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION} --file Dockerfile .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker tag elnebuloso/sonarqube-scanner elnebuloso/sonarqube-scanner:${SONAR_SCANNER_VERSION}
+  - docker push elnebuloso/sonarqube-scanner
+  - docker push elnebuloso/sonarqube-scanner:${SONAR_SCANNER_VERSION}

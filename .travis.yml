@@ -4,5 +4,5 @@ services:
   - docker
 
 script:
-  - export SONAR_SCANNER_VERSION=$(cat /VERSION)
+  - export SONAR_SCANNER_VERSION=$(cat ./VERSION)
   - echo ${SONAR_SCANNER_VERSION}

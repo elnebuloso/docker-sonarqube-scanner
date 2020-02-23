@@ -1,6 +1,8 @@
+<img src="https://raw.githubusercontent.com/elnebuloso/docker-sonarqube-scanner/master/logo.png" width="100%"/>
+
 # docker-sonarqube-scanner
 
-[![Build Status](https://travis-ci.com/elnebuloso/docker-sonarqube-scanner.svg?branch=master)](https://travis-ci.com/elnebuloso/docker-sonarqube-scanner)
+![Release](https://github.com/elnebuloso/docker-sonarqube-scanner/workflows/Release/badge.svg)
 [![Docker Pulls](https://img.shields.io/docker/pulls/elnebuloso/sonarqube-scanner.svg)](https://hub.docker.com/r/elnebuloso/sonarqube-scanner)
 [![GitHub](https://img.shields.io/github/license/elnebuloso/docker-ansible.svg)](https://github.com/elnebuloso/docker-sonarqube-scanner)
 

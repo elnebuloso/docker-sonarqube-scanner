@@ -1,0 +1,44 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  main:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Configuration
+        run: |
+          echo "::set-env name=TAG::elnebuloso/sonarqube-scanner"
+      - name: Version
+        run: |
+          export SONAR_SCANNER_VERSION=$(cat ./VERSION)
+          export MAJOR=$(cat ./VERSION | cut -d. -f1)
+          export MINOR=$(cat ./VERSION | cut -d. -f2)
+          export PATCH=$(cat ./VERSION | cut -d. -f3)
+          export BUILD=$(cat ./VERSION | cut -d. -f4)
+          echo "::set-env name=SONAR_SCANNER_VERSION::$SONAR_SCANNER_VERSION"
+          echo "::set-env name=MAJOR::$MAJOR"
+          echo "::set-env name=MINOR::$MINOR"
+          echo "::set-env name=PATCH::$PATCH"
+          echo "::set-env name=PATCH::$BUILD"
+      - name: Build
+        run: |
+          docker build --tag elnebuloso/sonarqube-scanner --pull --rm --no-cache --build-arg SONAR_SCANNER_VERSION=${SONAR_SCANNER_VERSION} --file Dockerfile .
+      - name: Release
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker tag ${TAG} ${TAG}:${MAJOR}.${MINOR}.${PATCH}.${BUILD}
+          docker tag ${TAG} ${TAG}:${MAJOR}.${MINOR}.${PATCH}
+          docker tag ${TAG} ${TAG}:${MAJOR}.${MINOR}
+          docker tag ${TAG} ${TAG}:${MAJOR}
+          docker push ${TAG}:${MAJOR}.${MINOR}.${PATCH}.${BUILD}
+          docker push ${TAG}:${MAJOR}.${MINOR}.${PATCH}
+          docker push ${TAG}:${MAJOR}.${MINOR}
+          docker push ${TAG}:${MAJOR}
+          docker push ${TAG}
